@@ -44,7 +44,7 @@ const currency = new Intl.NumberFormat("id-ID", {
 
 const defaultSettings = {
   brandName: "bouquetien",
-  heroText: "Rangkaian uang bentuk bunga untuk hadiah, wisuda, wedding, dan momen harian lainya.",
+  heroText: "Pilihan hadiah dan produk custom untuk wisuda, wedding, hampers, dan momen harian lainya.",
   heroImages: {
     left: "https://images.unsplash.com/photo-1518709779341-56cf4535e94b?auto=format&fit=crop&w=800&q=80",
     main: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=1400&q=80",
@@ -61,25 +61,25 @@ const defaultSettings = {
 const fallbackProducts = [
   {
     id: "sample-1",
-    name: "Blush Garden Bouquet",
+    name: "Money Flower Bouquet",
     price: 175000,
-    description: "Bouquet bernuansa pastel dengan sentuhan bunga segar dan wrapping elegan.",
+    description: "Rangkaian uang bentuk bunga dengan wrapping elegan untuk hadiah spesial.",
     imageUrl:
       "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: "sample-2",
-    name: "Soft White Bloom",
-    price: 150000,
-    description: "Rangkaian putih minimalis untuk hadiah intimate, wisuda, dan anniversary.",
+    name: "Hampers Custom",
+    price: "custom",
+    description: "Paket hadiah custom yang bisa disesuaikan untuk wisuda, ulang tahun, dan event.",
     imageUrl:
       "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: "sample-3",
-    name: "Rose Petite Wrap",
-    price: 120000,
-    description: "Ukuran petite yang manis, ringan dibawa, dan tetap terlihat premium.",
+    name: "Gift Petite",
+    price: "",
+    description: "Hadiah ukuran kecil dengan tampilan manis dan premium.",
     imageUrl:
       "https://images.unsplash.com/photo-1518709779341-56cf4535e94b?auto=format&fit=crop&w=900&q=80",
   },
@@ -151,7 +151,21 @@ function escapeHtml(value) {
 }
 
 function formatPrice(value) {
-  return currency.format(Number(value || 0));
+  const rawValue = String(value ?? "").trim();
+  if (!rawValue) {
+    return "";
+  }
+
+  const numericValue = Number(rawValue.replace(/[^\d]/g, ""));
+  if (/^\d[\d.\s,]*$/.test(rawValue) && Number.isFinite(numericValue)) {
+    return currency.format(numericValue);
+  }
+
+  return rawValue;
+}
+
+function getPriceText(product) {
+  return formatPrice(product.price);
 }
 
 function normalizeWhatsappNumbers(value) {
@@ -169,7 +183,9 @@ function getWhatsappNumbers() {
 }
 
 function getWhatsappLink(product, number) {
-  const text = `Halo ${siteSettings.brandName}, saya mau pesan ${product.name} (${formatPrice(product.price)}).`;
+  const priceText = getPriceText(product);
+  const pricePart = priceText ? ` (${priceText})` : "";
+  const text = `Halo ${siteSettings.brandName}, saya mau pesan ${product.name}${pricePart}.`;
   return `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
 }
 
@@ -193,10 +209,20 @@ function renderSocialLinks() {
     ? links
         .map(
           ([label, url]) =>
-            `<a href="${escapeHtml(url)}" target="_blank" rel="noopener">${escapeHtml(label)}</a>`,
+            `<a href="${escapeHtml(url)}" target="_blank" rel="noopener" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}">${getSocialIcon(label)}<span class="sr-only">${escapeHtml(label)}</span></a>`,
         )
         .join("")
-    : `<span class="empty-social">Link sosial media belum diisi.</span>`;
+    : "";
+}
+
+function getSocialIcon(label) {
+  const icons = {
+    Instagram: `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg>`,
+    TikTok: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v11.2a4.2 4.2 0 1 1-4.2-4.2"></path><path d="M14 5.5c1.2 2.3 2.9 3.7 5 4"></path></svg>`,
+    YouTube: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.8 8.2c.2-1.4 1.2-2.4 2.6-2.6 3.7-.4 7.5-.4 11.2 0 1.4.2 2.4 1.2 2.6 2.6.3 2.5.3 5.1 0 7.6-.2 1.4-1.2 2.4-2.6 2.6-3.7.4-7.5.4-11.2 0-1.4-.2-2.4-1.2-2.6-2.6a30 30 0 0 1 0-7.6Z"></path><path d="m10 9 5 3-5 3V9Z"></path></svg>`,
+  };
+
+  return icons[label] || "";
 }
 
 function renderSiteSettings() {
@@ -251,12 +277,15 @@ function renderProducts() {
           })
           .join("");
 
+        const priceText = getPriceText(product);
+        const priceMarkup = priceText ? `<div class="price">${escapeHtml(priceText)}</div>` : "";
+
         return `
         <article class="product-card">
           <img src="${escapeHtml(product.imageUrl)}" alt="${escapeHtml(product.name)}" loading="lazy">
           <div class="product-info">
             <h3>${escapeHtml(product.name)}</h3>
-            <div class="price">${formatPrice(product.price)}</div>
+            ${priceMarkup}
             <p>${escapeHtml(product.description)}</p>
             <div class="wa-list">${whatsappButtons}</div>
           </div>
@@ -274,19 +303,22 @@ function renderProducts() {
 function renderAdminList() {
   elements.adminList.innerHTML = products
     .map(
-      (product) => `
+      (product) => {
+        const priceText = getPriceText(product);
+        return `
         <div class="admin-product" data-id="${escapeHtml(product.id)}">
           <img src="${escapeHtml(product.imageUrl)}" alt="${escapeHtml(product.name)}">
           <div>
             <strong>${escapeHtml(product.name)}</strong>
-            <span>${formatPrice(product.price)}</span>
+            <span>${priceText ? escapeHtml(priceText) : "Harga belum diisi"}</span>
           </div>
           <div class="admin-product-actions">
             <button class="ghost-button" type="button" data-action="edit">Edit</button>
             <button class="danger-button" type="button" data-action="delete">Hapus</button>
           </div>
         </div>
-      `,
+      `;
+      },
     )
     .join("");
 }
@@ -509,7 +541,7 @@ elements.productForm.addEventListener("submit", async (event) => {
 
     const payload = {
       name: elements.nameInput.value.trim(),
-      price: Number(elements.priceInput.value),
+      price: elements.priceInput.value.trim(),
       description: elements.descriptionInput.value.trim(),
       imageUrl,
       updatedAt: serverTimestamp(),

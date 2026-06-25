@@ -30,7 +30,7 @@
         <div class="hero-side hero-left"></div>
         <div class="hero-main">
           <div class="hero-copy">
-            <p id="heroText">Rangkaian uang bentuk bunga untuk hadiah, wisuda, wedding, dan momen harian lainya.</p>
+            <p id="heroText">Pilihan hadiah dan produk custom untuk wisuda, wedding, hampers, dan momen harian lainya.</p>
           </div>
         </div>
         <div class="hero-side hero-right"></div>
@@ -39,7 +39,7 @@
       <section class="catalog-shell" id="catalog">
         <div class="section-heading">
           <p class="eyebrow">produk pilihan</p>
-          <h2>Katalog Bouquet</h2>
+          <h2>Katalog Produk</h2>
         </div>
         <div class="toolbar">
           <label class="search-box">
@@ -54,12 +54,10 @@
       <section class="order-band" id="order">
         <p class="eyebrow">order cepat</p>
         <h2>Klik WhatsApp di produk yang kamu pilih</h2>
-        <p>Admin akan menerima nama produk dan harga otomatis dari katalog.</p>
+        <p>Admin akan menerima nama produk dan detail harga jika diisi.</p>
       </section>
 
-      <section class="social-band" id="social">
-        <p class="eyebrow">ikuti kami</p>
-        <h2>Sosial Media</h2>
+      <section class="social-band" id="social" aria-label="Sosial media">
         <div class="social-links" id="socialLinks"></div>
       </section>
     </main>
@@ -145,8 +143,8 @@
             <input id="nameInput" type="text" required maxlength="80" />
           </label>
           <label>
-            Harga
-            <input id="priceInput" type="number" required min="0" step="1000" />
+            Harga opsional
+            <input id="priceInput" type="text" maxlength="40" placeholder="Kosongkan, 150000, custom, mulai 50k..." />
           </label>
           <label>
             Keterangan
