@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BOUQUETIEN - Katalog Produk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Great+Vibes&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand">
+        <h1 id="brandName">bouquetien</h1>
+      </div>
+      <nav class="top-nav" aria-label="Navigasi utama">
+        <a href="#catalog">Katalog</a>
+        <a href="#order">Pesan</a>
+        <a href="#social">Sosial</a>
+        <button class="ghost-button" id="adminOpenBtn" type="button">Admin</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-label="BOUQUETIEN">
+        <div class="hero-side hero-left"></div>
+        <div class="hero-main">
+          <div class="hero-copy">
+            <p id="heroText">Rangkaian uang bentuk bunga untuk hadiah, wisuda, wedding, dan momen harian lainya.</p>
+          </div>
+        </div>
+        <div class="hero-side hero-right"></div>
+      </section>
+
+      <section class="catalog-shell" id="catalog">
+        <div class="section-heading">
+          <p class="eyebrow">produk pilihan</p>
+          <h2>Katalog Bouquet</h2>
+        </div>
+        <div class="toolbar">
+          <label class="search-box">
+            <span>Cari</span>
+            <input id="searchInput" type="search" placeholder="Nama produk..." autocomplete="off" />
+          </label>
+        </div>
+        <div class="status-line" id="publicStatus">Memuat produk...</div>
+        <div class="product-grid" id="productGrid"></div>
+      </section>
+
+      <section class="order-band" id="order">
+        <p class="eyebrow">order cepat</p>
+        <h2>Klik WhatsApp di produk yang kamu pilih</h2>
+        <p>Admin akan menerima nama produk dan harga otomatis dari katalog.</p>
+      </section>
+
+      <section class="social-band" id="social">
+        <p class="eyebrow">ikuti kami</p>
+        <h2>Sosial Media</h2>
+        <div class="social-links" id="socialLinks"></div>
+      </section>
+    </main>
+
+    <dialog class="admin-dialog" id="adminDialog">
+      <div class="dialog-head">
+        <div>
+          <p class="eyebrow">dashboard</p>
+          <h2>Admin BOUQUETIEN</h2>
+        </div>
+        <button class="icon-button" id="adminCloseBtn" type="button" aria-label="Tutup">&times;</button>
+      </div>
+
+      <form class="login-form" id="loginForm">
+        <label>
+          Email admin
+          <input id="emailInput" type="email" required autocomplete="email" />
+        </label>
+        <label>
+          Password
+          <input id="passwordInput" type="password" required autocomplete="current-password" />
+        </label>
+        <button class="primary-button" type="submit">Login</button>
+        <p class="form-message" id="loginMessage"></p>
+      </form>
+
+      <div class="admin-panel" id="adminPanel" hidden>
+        <div class="admin-actions">
+          <span id="adminEmail"></span>
+          <button class="ghost-button" id="logoutBtn" type="button">Logout</button>
+        </div>
+
+        <form class="settings-form" id="settingsForm">
+          <h3>Pengaturan Web</h3>
+          <label>
+            Nama brand
+            <input id="brandInput" type="text" required maxlength="40" />
+          </label>
+          <label>
+            Teks tampilan utama
+            <textarea id="heroTextInput" required rows="3" maxlength="180"></textarea>
+          </label>
+          <div class="settings-grid">
+            <label>
+              Foto kiri
+              <input id="heroLeftInput" type="file" accept="image/*" />
+            </label>
+            <label>
+              Foto tengah
+              <input id="heroMainInput" type="file" accept="image/*" />
+            </label>
+            <label>
+              Foto kanan
+              <input id="heroRightInput" type="file" accept="image/*" />
+            </label>
+          </div>
+          <label>
+            Nomor WhatsApp
+            <textarea id="whatsappInput" required rows="3" placeholder="6281234567890&#10;6289876543210"></textarea>
+          </label>
+          <div class="settings-grid">
+            <label>
+              Link Instagram
+              <input id="instagramInput" type="url" placeholder="https://instagram.com/..." />
+            </label>
+            <label>
+              Link TikTok
+              <input id="tiktokInput" type="url" placeholder="https://tiktok.com/@..." />
+            </label>
+            <label>
+              Link YouTube
+              <input id="youtubeInput" type="url" placeholder="https://youtube.com/..." />
+            </label>
+          </div>
+          <button class="primary-button" type="submit">Simpan Pengaturan</button>
+          <p class="form-message" id="settingsMessage"></p>
+        </form>
+
+        <form class="product-form" id="productForm">
+          <input id="productIdInput" type="hidden" />
+          <label>
+            Nama produk
+            <input id="nameInput" type="text" required maxlength="80" />
+          </label>
+          <label>
+            Harga
+            <input id="priceInput" type="number" required min="0" step="1000" />
+          </label>
+          <label>
+            Keterangan
+            <textarea id="descriptionInput" required rows="4" maxlength="240"></textarea>
+          </label>
+          <label>
+            Foto produk
+            <input id="photoInput" type="file" accept="image/*" />
+          </label>
+          <div class="form-row">
+            <button class="primary-button" type="submit">Simpan Produk</button>
+            <button class="ghost-button" id="resetFormBtn" type="button">Reset</button>
+          </div>
+          <p class="form-message" id="productMessage"></p>
+        </form>
+
+        <div class="admin-list" id="adminList"></div>
+      </div>
+    </dialog>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
