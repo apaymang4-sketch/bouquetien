@@ -1,14 +1,14 @@
 :root {
-  --paper: #f8f5f0;
-  --paper-deep: #eee8df;
+  --paper: #f8f6ff;
+  --paper-deep: #e9e5fb;
   --ink: #3e3934;
-  --muted: #8c8177;
+  --muted: #8d86a0;
   --rose: #d9a9a6;
   --sage: #9baa8d;
   --cream: #fffdf9;
   --line: rgba(62, 57, 52, 0.12);
-  --shadow-dark: rgba(125, 113, 101, 0.22);
-  --shadow-light: rgba(255, 255, 255, 0.9);
+  --shadow-dark: rgba(144, 135, 176, 0.28);
+  --shadow-light: rgba(255, 255, 255, 0.96);
 }
 
 * {
@@ -18,7 +18,9 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--paper), #ffffff 46%, var(--paper-deep));
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.74), transparent 28rem),
+    linear-gradient(135deg, var(--paper), #ffffff 44%, var(--paper-deep));
   color: var(--ink);
   font-family: Inter, system-ui, sans-serif;
 }
@@ -43,8 +45,8 @@ button {
   justify-content: center;
   gap: clamp(12px, 2vw, 20px);
   padding: clamp(24px, 5vw, 42px) clamp(16px, 5vw, 64px) clamp(14px, 2.4vw, 20px);
-  background: #fffdf9;
-  border-bottom: 1px solid var(--line);
+  background: #f8f6ff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.78);
 }
 
 .brand {
@@ -62,11 +64,11 @@ button {
 .settings-form,
 .product-form,
 .login-form {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.86), rgba(235, 228, 219, 0.7));
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(232, 228, 250, 0.78));
   box-shadow:
-    10px 10px 24px var(--shadow-dark),
-    -10px -10px 24px var(--shadow-light),
-    inset 1px 1px 0 rgba(255, 255, 255, 0.86);
+    12px 12px 28px rgba(144, 135, 176, 0.22),
+    -12px -12px 28px rgba(255, 255, 255, 0.92),
+    inset 1px 1px 0 rgba(255, 255, 255, 0.95);
 }
 
 .brand h1,
@@ -87,7 +89,7 @@ button {
 }
 
 .brand h1 {
-  color: #5f5b57;
+  color: #777087;
   font-family: "Great Vibes", cursive;
   font-size: clamp(48px, 7vw, 86px);
   font-weight: 400;
@@ -130,11 +132,11 @@ button {
 }
 
 .ghost-button {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(236, 229, 219, 0.76));
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(231, 226, 249, 0.82));
   box-shadow:
-    6px 6px 14px rgba(125, 113, 101, 0.16),
-    -6px -6px 14px rgba(255, 255, 255, 0.92),
-    inset 1px 1px 0 rgba(255, 255, 255, 0.86);
+    8px 8px 18px rgba(144, 135, 176, 0.2),
+    -8px -8px 18px rgba(255, 255, 255, 0.95),
+    inset 1px 1px 0 rgba(255, 255, 255, 0.96);
   color: var(--muted);
   text-transform: uppercase;
 }
@@ -146,17 +148,25 @@ button {
   justify-content: center;
   width: clamp(74px, 12vw, 112px);
   min-height: 38px;
-  border: 1px solid rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.84);
   border-radius: 8px;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(235, 228, 219, 0.78));
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(231, 226, 249, 0.84));
   box-shadow:
-    6px 6px 14px rgba(125, 113, 101, 0.16),
-    -6px -6px 14px rgba(255, 255, 255, 0.92),
-    inset 1px 1px 0 rgba(255, 255, 255, 0.86);
-  color: #7a7067;
+    8px 8px 18px rgba(144, 135, 176, 0.2),
+    -8px -8px 18px rgba(255, 255, 255, 0.96),
+    inset 1px 1px 0 rgba(255, 255, 255, 0.96);
+  color: #827a94;
   font-size: 11px;
   font-weight: 800;
   text-transform: uppercase;
+}
+
+.top-nav a:active,
+.top-nav .ghost-button:active,
+.social-links a:active {
+  box-shadow:
+    inset 6px 6px 14px rgba(144, 135, 176, 0.2),
+    inset -6px -6px 14px rgba(255, 255, 255, 0.92);
 }
 
 .primary-button {
@@ -180,7 +190,7 @@ button {
   grid-template-columns: minmax(120px, 0.95fr) minmax(260px, 1.9fr) minmax(120px, 0.95fr);
   min-height: clamp(300px, 46vh, 540px);
   overflow: hidden;
-  border-bottom: 18px solid #fffdf9;
+  border-bottom: 18px solid #f8f6ff;
 }
 
 .hero-main,
@@ -213,11 +223,11 @@ button {
   width: min(620px, 100%);
   border-radius: 8px;
   padding: 14px 18px;
-  background: rgba(255, 253, 249, 0.78);
+  background: rgba(248, 246, 255, 0.82);
   box-shadow:
-    8px 8px 18px rgba(125, 113, 101, 0.2),
-    -6px -6px 16px rgba(255, 255, 255, 0.58),
-    inset 1px 1px 0 rgba(255, 255, 255, 0.82);
+    10px 10px 22px rgba(144, 135, 176, 0.22),
+    -8px -8px 20px rgba(255, 255, 255, 0.82),
+    inset 1px 1px 0 rgba(255, 255, 255, 0.94);
   text-align: center;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
@@ -377,7 +387,7 @@ button {
 
 .social-band {
   padding: 62px 18px 78px;
-  background: rgba(238, 232, 223, 0.54);
+  background: rgba(233, 229, 251, 0.58);
   text-align: center;
 }
 
@@ -403,25 +413,25 @@ button {
   place-items: center;
   border-radius: 8px;
   padding: 0;
-  background: rgba(255, 253, 249, 0.86);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(231, 226, 249, 0.84));
   box-shadow:
-    7px 7px 15px rgba(125, 113, 101, 0.18),
-    -6px -6px 16px rgba(255, 255, 255, 0.74);
+    9px 9px 20px rgba(144, 135, 176, 0.22),
+    -9px -9px 20px rgba(255, 255, 255, 0.94),
+    inset 1px 1px 0 rgba(255, 255, 255, 0.95);
   color: var(--ink);
   font-weight: 800;
   text-decoration: none;
 }
 
-.social-links a[aria-label="Instagram"] {
-  color: #d62976;
-}
-
-.social-links a[aria-label="TikTok"] {
-  color: #111111;
-}
-
 .social-links a[aria-label="YouTube"] {
   color: #ff0033;
+}
+
+.social-links img {
+  width: 31px;
+  height: 31px;
+  object-fit: contain;
+  border-radius: 7px;
 }
 
 .social-links svg {
@@ -434,19 +444,13 @@ button {
   stroke-width: 1.8;
 }
 
-.social-links a[aria-label="YouTube"] svg path:first-child,
-.social-links a[aria-label="Instagram"] svg rect {
+.social-links a[aria-label="YouTube"] svg path:first-child {
   fill: currentColor;
   stroke: currentColor;
 }
 
-.social-links a[aria-label="YouTube"] svg path:last-child,
-.social-links a[aria-label="Instagram"] svg circle {
+.social-links a[aria-label="YouTube"] svg path:last-child {
   stroke: #fffdf9;
-}
-
-.social-links a[aria-label="TikTok"] svg {
-  filter: drop-shadow(1px 0 0 #00f2ea) drop-shadow(-1px 0 0 #ff0050);
 }
 
 .sr-only {

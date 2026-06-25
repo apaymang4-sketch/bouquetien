@@ -217,8 +217,8 @@ function renderSocialLinks() {
 
 function getSocialIcon(label) {
   const icons = {
-    Instagram: `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg>`,
-    TikTok: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v11.2a4.2 4.2 0 1 1-4.2-4.2"></path><path d="M14 5.5c1.2 2.3 2.9 3.7 5 4"></path></svg>`,
+    Instagram: `<img src="./CONTOH/IG.avif" alt="" loading="lazy">`,
+    TikTok: `<img src="./CONTOH/tiktok.webp" alt="" loading="lazy">`,
     YouTube: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.8 8.2c.2-1.4 1.2-2.4 2.6-2.6 3.7-.4 7.5-.4 11.2 0 1.4.2 2.4 1.2 2.6 2.6.3 2.5.3 5.1 0 7.6-.2 1.4-1.2 2.4-2.6 2.6-3.7.4-7.5.4-11.2 0-1.4-.2-2.4-1.2-2.6-2.6a30 30 0 0 1 0-7.6Z"></path><path d="m10 9 5 3-5 3V9Z"></path></svg>`,
   };
 
