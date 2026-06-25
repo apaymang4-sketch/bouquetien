@@ -12,16 +12,16 @@
   --shadow-dark: rgba(133, 124, 166, 0.28);
   --shadow-light: rgba(255, 255, 255, 0.96);
   --raised:
-    12px 12px 28px rgba(133, 124, 166, 0.24),
-    -12px -12px 28px rgba(255, 255, 255, 0.92),
+    8px 8px 20px rgba(133, 124, 166, 0.16),
+    -8px -8px 20px rgba(255, 255, 255, 0.82),
     inset 1px 1px 0 rgba(255, 255, 255, 0.96);
   --raised-small:
-    7px 7px 16px rgba(133, 124, 166, 0.22),
-    -7px -7px 16px rgba(255, 255, 255, 0.94),
+    5px 5px 12px rgba(133, 124, 166, 0.16),
+    -5px -5px 12px rgba(255, 255, 255, 0.84),
     inset 1px 1px 0 rgba(255, 255, 255, 0.96);
   --pressed:
-    inset 7px 7px 14px rgba(133, 124, 166, 0.18),
-    inset -7px -7px 14px rgba(255, 255, 255, 0.92);
+    inset 5px 5px 11px rgba(133, 124, 166, 0.14),
+    inset -5px -5px 11px rgba(255, 255, 255, 0.82);
 }
 
 * {
@@ -56,13 +56,11 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(12px, 2vw, 20px);
-  padding: clamp(24px, 5vw, 42px) clamp(16px, 5vw, 64px) clamp(14px, 2.4vw, 20px);
+  gap: clamp(10px, 2vw, 16px);
+  padding: clamp(24px, 5vw, 40px) clamp(16px, 5vw, 64px) clamp(12px, 2.4vw, 18px);
   background: var(--surface);
-  border-bottom: 0;
-  box-shadow:
-    inset 0 -8px 18px rgba(133, 124, 166, 0.1),
-    inset 0 8px 18px rgba(255, 255, 255, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.62);
+  box-shadow: none;
 }
 
 .brand {
@@ -108,9 +106,7 @@ button {
   font-weight: 400;
   line-height: 0.92;
   text-align: center;
-  text-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.9),
-    0 10px 22px rgba(125, 113, 101, 0.14);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .eyebrow {
@@ -125,7 +121,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(8px, 2vw, 18px);
+  gap: clamp(18px, 6vw, 88px);
   width: 100%;
 }
 
@@ -145,8 +141,8 @@ button {
 }
 
 .ghost-button {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(231, 226, 249, 0.82));
-  box-shadow: var(--raised-small);
+  background: transparent;
+  box-shadow: none;
   color: var(--muted);
   text-transform: uppercase;
 }
@@ -156,22 +152,23 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: clamp(74px, 12vw, 112px);
-  min-height: 38px;
-  border: 1px solid rgba(255, 255, 255, 0.84);
-  border-radius: 8px;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(231, 226, 249, 0.84));
-  box-shadow: var(--raised-small);
-  color: #827a94;
+  width: auto;
+  min-height: 28px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: #7d758e;
   font-size: 11px;
   font-weight: 800;
+  padding: 0;
   text-transform: uppercase;
 }
 
 .top-nav a:active,
 .top-nav .ghost-button:active,
 .social-links a:active {
-  box-shadow: var(--pressed);
+  box-shadow: none;
 }
 
 .primary-button {
@@ -206,6 +203,11 @@ button {
 .social-links a:hover,
 .product-card:hover {
   transform: translateY(-1px);
+}
+
+.top-nav a:hover,
+.top-nav .ghost-button:hover {
+  color: #5f5573;
 }
 
 .top-nav a,
@@ -706,9 +708,9 @@ input::file-selector-button {
 
   .top-nav {
     width: 100%;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
-    gap: 8px;
+    gap: clamp(14px, 5vw, 28px);
   }
 
   .top-nav a,
@@ -719,9 +721,9 @@ input::file-selector-button {
 
   .top-nav a,
   .top-nav .ghost-button {
-    width: calc(50% - 6px);
-    max-width: 154px;
-    min-height: 38px;
+    width: auto;
+    max-width: none;
+    min-height: 26px;
   }
 
   .hero {
@@ -815,7 +817,12 @@ input::file-selector-button {
   }
 
   .top-nav {
-    gap: 7px;
+    gap: clamp(10px, 4vw, 18px);
+  }
+
+  .top-nav a,
+  .top-nav .ghost-button {
+    font-size: 9px;
   }
 
   .hero {
