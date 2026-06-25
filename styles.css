@@ -1,27 +1,28 @@
 :root {
-  --paper: #f8f6ff;
-  --paper-deep: #e9e5fb;
-  --surface: #f1eefc;
-  --surface-soft: #f8f6ff;
-  --ink: #403a4d;
-  --muted: #8d86a0;
+  --paper: #e8e4f0;
+  --paper-deep: #dcd6ea;
+  --surface: #e8e4f0;
+  --surface-soft: #eeeaf6;
+  --ink: #4a4560;
+  --muted: #8a7fa8;
+  --purple: #7c6fa0;
+  --purple-light: #a896cc;
+  --accent: #9b7fc8;
   --rose: #d9a9a6;
   --sage: #9baa8d;
   --cream: #fffdf9;
-  --line: rgba(125, 116, 155, 0.16);
-  --shadow-dark: rgba(133, 124, 166, 0.28);
-  --shadow-light: rgba(255, 255, 255, 0.96);
+  --line: rgba(124, 111, 160, 0.14);
+  --shadow-dark: #c5c0d4;
+  --shadow-light: #ffffff;
   --raised:
-    8px 8px 20px rgba(133, 124, 166, 0.16),
-    -8px -8px 20px rgba(255, 255, 255, 0.82),
-    inset 1px 1px 0 rgba(255, 255, 255, 0.96);
+    6px 6px 14px var(--shadow-dark),
+    -3px -3px 10px var(--shadow-light);
   --raised-small:
-    5px 5px 12px rgba(133, 124, 166, 0.16),
-    -5px -5px 12px rgba(255, 255, 255, 0.84),
-    inset 1px 1px 0 rgba(255, 255, 255, 0.96);
+    4px 4px 10px var(--shadow-dark),
+    -2px -2px 7px var(--shadow-light);
   --pressed:
-    inset 5px 5px 11px rgba(133, 124, 166, 0.14),
-    inset -5px -5px 11px rgba(255, 255, 255, 0.82);
+    inset 3px 3px 8px var(--shadow-dark),
+    inset -2px -2px 6px var(--shadow-light);
 }
 
 * {
@@ -32,8 +33,8 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.74), transparent 28rem),
-    linear-gradient(135deg, var(--paper), var(--surface-soft) 44%, var(--paper-deep));
+    radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.34), transparent 28rem),
+    var(--surface);
   color: var(--ink);
   font-family: Inter, system-ui, sans-serif;
 }
@@ -56,11 +57,12 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(10px, 2vw, 16px);
-  padding: clamp(24px, 5vw, 40px) clamp(16px, 5vw, 64px) clamp(12px, 2.4vw, 18px);
+  gap: 12px;
+  padding: 20px 16px 16px;
   background: var(--surface);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.62);
-  box-shadow: none;
+  border-bottom: 0;
+  border-radius: 0 0 20px 20px;
+  box-shadow: 4px 4px 10px var(--shadow-dark), -2px -2px 8px var(--shadow-light);
 }
 
 .brand {
@@ -101,13 +103,15 @@ button {
 }
 
 .brand h1 {
-  color: #746c8d;
-  font-family: "Great Vibes", cursive;
-  font-size: clamp(48px, 7vw, 86px);
+  color: var(--purple);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(32px, 7vw, 54px);
   font-weight: 400;
-  line-height: 0.92;
+  font-style: italic;
+  letter-spacing: 1px;
+  line-height: 1;
   text-align: center;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+  text-shadow: 1px 1px 2px var(--shadow-dark), -1px -1px 2px var(--shadow-light);
 }
 
 .eyebrow {
@@ -122,7 +126,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(18px, 6vw, 88px);
+  gap: 4px;
   width: 100%;
 }
 
@@ -142,8 +146,8 @@ button {
 }
 
 .ghost-button {
-  background: transparent;
-  box-shadow: none;
+  background: var(--surface);
+  box-shadow: var(--raised-small);
   color: var(--muted);
   text-transform: uppercase;
 }
@@ -154,22 +158,23 @@ button {
   align-items: center;
   justify-content: center;
   width: auto;
-  min-height: 28px;
+  min-height: 30px;
   border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-  color: #7d758e;
-  font-size: 11px;
+  border-radius: 20px;
+  background: var(--surface);
+  box-shadow: 3px 3px 7px var(--shadow-dark), -2px -2px 5px var(--shadow-light);
+  color: var(--muted);
+  font-size: 10px;
   font-weight: 800;
-  padding: 0;
+  letter-spacing: 1.5px;
+  padding: 0 12px;
   text-transform: uppercase;
 }
 
 .top-nav a:active,
 .top-nav .ghost-button:active,
 .social-links a:active {
-  box-shadow: none;
+  box-shadow: inset 2px 2px 6px var(--shadow-dark), inset -1px -1px 4px var(--shadow-light);
 }
 
 .primary-button {
@@ -235,9 +240,12 @@ textarea:focus-visible {
 .hero {
   display: grid;
   grid-template-columns: minmax(120px, 0.95fr) minmax(260px, 1.9fr) minmax(120px, 0.95fr);
-  min-height: clamp(300px, 46vh, 540px);
+  min-height: clamp(280px, 44vh, 520px);
+  margin: 16px;
   overflow: hidden;
-  border-bottom: 18px solid var(--surface);
+  border-radius: 20px;
+  border-bottom: 0;
+  box-shadow: var(--raised);
 }
 
 .hero-main,
@@ -268,10 +276,10 @@ textarea:focus-visible {
 
 .hero-copy {
   width: min(620px, 100%);
-  border-radius: 8px;
-  padding: 14px 18px;
-  background: rgba(241, 238, 252, 0.86);
-  box-shadow: var(--raised-small);
+  border-radius: 20px 20px 0 0;
+  padding: 14px 18px 12px;
+  background: var(--surface);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
   text-align: center;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
@@ -285,9 +293,11 @@ textarea:focus-visible {
 .hero-copy > p:last-child {
   max-width: 560px;
   margin: 0 auto;
-  color: #4b433d;
+  color: var(--ink);
   font-size: clamp(14px, 1.5vw, 17px);
-  font-weight: 600;
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 400;
   line-height: 1.6;
 }
 
@@ -308,8 +318,10 @@ main {
 .section-heading h2,
 .order-band h2 {
   margin: 8px 0 0;
-  font-size: clamp(38px, 6vw, 72px);
-  font-weight: 600;
+  color: var(--purple);
+  font-size: clamp(30px, 6vw, 58px);
+  font-weight: 400;
+  text-shadow: 1px 1px 2px var(--shadow-dark), -1px -1px 2px var(--shadow-light);
 }
 
 .toolbar {
@@ -322,25 +334,26 @@ main {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
-  margin: 0 auto 22px;
+  gap: 8px;
+  margin: 0 auto 20px;
 }
 
 .category-tab {
-  min-height: 36px;
+  min-height: 30px;
   border: 0;
-  border-radius: 8px;
-  padding: 0 16px;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(231, 226, 249, 0.82));
-  box-shadow: var(--raised-small);
-  color: #716a82;
-  font-size: 12px;
+  border-radius: 50px;
+  padding: 0 14px;
+  background: var(--surface);
+  box-shadow: 2px 2px 5px var(--shadow-dark), -1px -1px 4px var(--shadow-light);
+  color: var(--muted);
+  font-size: 10px;
   font-weight: 800;
+  letter-spacing: 0.5px;
 }
 
 .category-tab.is-active {
-  box-shadow: var(--pressed);
-  color: #4f4762;
+  box-shadow: inset 2px 2px 5px var(--shadow-dark), inset -1px -1px 3px var(--shadow-light);
+  color: var(--purple);
 }
 
 .search-box {
@@ -348,8 +361,8 @@ main {
   align-items: center;
   gap: 12px;
   width: min(520px, 100%);
-  border-radius: 8px;
-  padding: 12px 16px;
+  border-radius: 50px;
+  padding: 10px 16px;
   color: var(--muted);
   font-size: 13px;
   font-weight: 700;
@@ -400,7 +413,7 @@ input::file-selector-button {
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-  gap: clamp(16px, 3vw, 24px);
+  gap: clamp(14px, 3vw, 24px);
 }
 
 .product-card {
@@ -409,7 +422,7 @@ input::file-selector-button {
   flex-direction: column;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.68);
-  border-radius: 8px;
+  border-radius: 16px;
 }
 
 .product-card img {
@@ -425,21 +438,22 @@ input::file-selector-button {
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 10px;
-  padding: clamp(14px, 3vw, 18px);
+  gap: 8px;
+  padding: 10px 12px 12px;
 }
 
 .product-info h3 {
   margin: 0;
-  font-family: "Cormorant Garamond", serif;
-  font-size: clamp(25px, 7vw, 30px);
-  line-height: 1.05;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: clamp(13px, 4vw, 17px);
+  font-weight: 700;
+  line-height: 1.3;
 }
 
 .product-category {
   width: fit-content;
-  border-radius: 8px;
-  padding: 6px 10px;
+  border-radius: 50px;
+  padding: 5px 10px;
   background: var(--surface);
   box-shadow: var(--pressed);
   color: #7d758e;
@@ -449,32 +463,32 @@ input::file-selector-button {
 
 .product-info p {
   margin: 0;
-  color: #6b625a;
-  font-size: 14px;
-  line-height: 1.55;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.4;
 }
 
 .price {
-  color: #7c6486;
-  font-size: 18px;
+  color: var(--accent);
+  font-size: 14px;
   font-weight: 800;
+  text-shadow: 1px 1px 2px var(--shadow-dark);
 }
 
 .wa-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
+  min-height: 38px;
   margin-top: auto;
-  border-radius: 8px;
-  background: linear-gradient(145deg, #8faf8d, #6c8f70);
-  color: white;
+  border-radius: 50px;
+  background: var(--surface);
+  color: var(--purple);
   font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 1px;
   text-decoration: none;
-  box-shadow:
-    7px 7px 16px rgba(94, 118, 93, 0.24),
-    -6px -6px 15px rgba(255, 255, 255, 0.78),
-    inset 1px 1px 0 rgba(255, 255, 255, 0.35);
+  box-shadow: var(--raised-small);
 }
 
 .wa-list {
@@ -754,7 +768,7 @@ input::file-selector-button {
   }
 
   .brand h1 {
-    font-size: clamp(64px, 8vw, 82px);
+    font-size: clamp(38px, 6vw, 54px);
   }
 
   .hero {
@@ -774,7 +788,7 @@ input::file-selector-button {
 @media (max-width: 760px) {
   .site-header {
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     padding: 20px 12px 12px;
   }
 
@@ -782,7 +796,7 @@ input::file-selector-button {
     width: 100%;
     flex-wrap: nowrap;
     justify-content: center;
-    gap: clamp(14px, 5vw, 28px);
+    gap: 4px;
   }
 
   .top-nav a,
@@ -795,13 +809,14 @@ input::file-selector-button {
   .top-nav .ghost-button {
     width: auto;
     max-width: none;
-    min-height: 26px;
+    min-height: 30px;
+    padding: 0 12px;
   }
 
   .hero {
     grid-template-columns: 1fr;
-    min-height: 330px;
-    border-bottom-width: 10px;
+    min-height: 240px;
+    margin: 16px;
   }
 
   .hero-side {
@@ -809,12 +824,13 @@ input::file-selector-button {
   }
 
   .hero-main {
-    min-height: 330px;
-    padding: 0 14px 16px;
+    min-height: 240px;
+    padding: 0;
   }
 
   .hero-copy {
-    padding: 10px 12px;
+    align-self: end;
+    padding: 14px 16px 10px;
   }
 
   .catalog-shell {
@@ -824,7 +840,7 @@ input::file-selector-button {
 
   .section-heading h2,
   .order-band h2 {
-    font-size: clamp(32px, 10vw, 44px);
+    font-size: 26px;
   }
 
   .toolbar {
@@ -847,16 +863,17 @@ input::file-selector-button {
   }
 
   .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
   }
 
   .product-card img {
-    aspect-ratio: 1 / 0.92;
+    aspect-ratio: 1 / 0.82;
   }
 
   .wa-button {
-    min-height: 42px;
-    font-size: 13px;
+    min-height: 36px;
+    font-size: 10px;
   }
 
   .order-band,
@@ -897,16 +914,18 @@ input::file-selector-button {
   }
 
   .brand h1 {
-    font-size: clamp(42px, 15vw, 58px);
+    font-size: 32px;
   }
 
   .top-nav {
-    gap: clamp(10px, 4vw, 18px);
+    gap: 4px;
   }
 
   .top-nav a,
   .top-nav .ghost-button {
-    font-size: 9px;
+    font-size: 10px;
+    letter-spacing: 1.2px;
+    padding: 0 9px;
   }
 
   .hero {
