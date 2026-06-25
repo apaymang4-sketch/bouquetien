@@ -76,6 +76,7 @@ button {
 .admin-dialog,
 .search-box,
 .settings-form,
+.category-form,
 .product-form,
 .login-form {
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(232, 228, 250, 0.78));
@@ -317,6 +318,31 @@ main {
   margin: 34px 0 24px;
 }
 
+.category-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 auto 22px;
+}
+
+.category-tab {
+  min-height: 36px;
+  border: 0;
+  border-radius: 8px;
+  padding: 0 16px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(231, 226, 249, 0.82));
+  box-shadow: var(--raised-small);
+  color: #716a82;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.category-tab.is-active {
+  box-shadow: var(--pressed);
+  color: #4f4762;
+}
+
 .search-box {
   display: flex;
   align-items: center;
@@ -335,6 +361,7 @@ main {
 .login-form input,
 .settings-form input,
 .settings-form textarea,
+.product-form select,
 .product-form input,
 .product-form textarea {
   width: 100%;
@@ -407,6 +434,17 @@ input::file-selector-button {
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(25px, 7vw, 30px);
   line-height: 1.05;
+}
+
+.product-category {
+  width: fit-content;
+  border-radius: 8px;
+  padding: 6px 10px;
+  background: var(--surface);
+  box-shadow: var(--pressed);
+  color: #7d758e;
+  font-size: 11px;
+  font-weight: 800;
 }
 
 .product-info p {
@@ -562,6 +600,7 @@ input::file-selector-button {
 
 .login-form,
 .settings-form,
+.category-form,
 .product-form {
   display: grid;
   gap: 16px;
@@ -570,7 +609,8 @@ input::file-selector-button {
   padding: 18px;
 }
 
-.settings-form h3 {
+.settings-form h3,
+.category-form h3 {
   margin: 0;
   font-family: "Cormorant Garamond", serif;
   font-size: 30px;
@@ -578,6 +618,7 @@ input::file-selector-button {
 
 .login-form label,
 .settings-form label,
+.category-form label,
 .product-form label {
   display: grid;
   gap: 8px;
@@ -589,7 +630,9 @@ input::file-selector-button {
 .login-form input,
 .settings-form input,
 .settings-form textarea,
+.category-form input,
 .product-form input,
+.product-form select,
 .product-form textarea {
   min-height: 44px;
   padding: 10px 12px;
@@ -598,6 +641,35 @@ input::file-selector-button {
 .settings-form textarea,
 .product-form textarea {
   resize: vertical;
+}
+
+.category-admin-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.category-admin-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-radius: 8px;
+  padding: 12px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.74), rgba(232, 228, 250, 0.82));
+  box-shadow: var(--raised-small);
+}
+
+.category-admin-item span {
+  display: grid;
+  gap: 2px;
+  font-weight: 800;
+}
+
+.category-admin-item small {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .settings-grid {
@@ -763,6 +835,17 @@ input::file-selector-button {
     padding: 10px 12px;
   }
 
+  .category-tabs {
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding: 4px 2px 12px;
+  }
+
+  .category-tab {
+    flex: 0 0 auto;
+  }
+
   .product-grid {
     gap: 14px;
   }
@@ -789,7 +872,8 @@ input::file-selector-button {
   .dialog-head,
   .admin-actions,
   .form-row,
-  .admin-product {
+  .admin-product,
+  .category-admin-item {
     align-items: stretch;
     flex-direction: column;
   }

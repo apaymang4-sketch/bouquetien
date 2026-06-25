@@ -47,6 +47,7 @@
             <input id="searchInput" type="search" placeholder="Nama produk..." autocomplete="off" />
           </label>
         </div>
+        <div class="category-tabs" id="categoryTabs" aria-label="Kategori katalog"></div>
         <div class="status-line" id="publicStatus">Memuat produk...</div>
         <div class="product-grid" id="productGrid"></div>
       </section>
@@ -136,11 +137,27 @@
           <p class="form-message" id="settingsMessage"></p>
         </form>
 
+        <form class="category-form" id="categoryForm">
+          <h3>Kategori Katalog</h3>
+          <label>
+            Nama kategori
+            <input id="categoryNameInput" type="text" required maxlength="50" placeholder="Bunga, Hantaran, Hampers..." />
+          </label>
+          <button class="primary-button" type="submit">Tambah Kategori</button>
+          <p class="form-message" id="categoryMessage"></p>
+        </form>
+
+        <div class="category-admin-list" id="categoryAdminList"></div>
+
         <form class="product-form" id="productForm">
           <input id="productIdInput" type="hidden" />
           <label>
             Nama produk
             <input id="nameInput" type="text" required maxlength="80" />
+          </label>
+          <label>
+            Kategori
+            <select id="categorySelect" required></select>
           </label>
           <label>
             Harga opsional

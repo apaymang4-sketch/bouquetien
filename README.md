@@ -37,6 +37,7 @@ tien@bedz.com
 ## Struktur Firestore
 
 - `products/{productId}` untuk katalog produk
+- `categories/{categoryId}` untuk daftar kategori katalog
 - `site/settings` untuk pengaturan tampilan web
 
 ## Firestore Rules Contoh
@@ -51,6 +52,11 @@ service cloud.firestore {
     }
 
     match /products/{productId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /categories/{categoryId} {
       allow read: if true;
       allow create, update, delete: if isAdmin();
     }

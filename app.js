@@ -62,6 +62,7 @@ const fallbackProducts = [
   {
     id: "sample-1",
     name: "Money Flower Bouquet",
+    categoryId: "bunga",
     price: 175000,
     description: "Rangkaian uang bentuk bunga dengan wrapping elegan untuk hadiah spesial.",
     imageUrl:
@@ -70,6 +71,7 @@ const fallbackProducts = [
   {
     id: "sample-2",
     name: "Hampers Custom",
+    categoryId: "hampers",
     price: "custom",
     description: "Paket hadiah custom yang bisa disesuaikan untuk wisuda, ulang tahun, dan event.",
     imageUrl:
@@ -78,11 +80,18 @@ const fallbackProducts = [
   {
     id: "sample-3",
     name: "Gift Petite",
+    categoryId: "hantaran",
     price: "",
     description: "Hadiah ukuran kecil dengan tampilan manis dan premium.",
     imageUrl:
       "https://images.unsplash.com/photo-1518709779341-56cf4535e94b?auto=format&fit=crop&w=900&q=80",
   },
+];
+
+const fallbackCategories = [
+  { id: "bunga", name: "Bunga" },
+  { id: "hantaran", name: "Hantaran" },
+  { id: "hampers", name: "Hampers" },
 ];
 
 const elements = {
@@ -99,10 +108,16 @@ const elements = {
   productGrid: document.querySelector("#productGrid"),
   publicStatus: document.querySelector("#publicStatus"),
   adminList: document.querySelector("#adminList"),
+  categoryTabs: document.querySelector("#categoryTabs"),
+  categoryForm: document.querySelector("#categoryForm"),
+  categoryNameInput: document.querySelector("#categoryNameInput"),
+  categoryMessage: document.querySelector("#categoryMessage"),
+  categoryAdminList: document.querySelector("#categoryAdminList"),
   searchInput: document.querySelector("#searchInput"),
   resetFormBtn: document.querySelector("#resetFormBtn"),
   productIdInput: document.querySelector("#productIdInput"),
   nameInput: document.querySelector("#nameInput"),
+  categorySelect: document.querySelector("#categorySelect"),
   priceInput: document.querySelector("#priceInput"),
   descriptionInput: document.querySelector("#descriptionInput"),
   photoInput: document.querySelector("#photoInput"),
@@ -125,9 +140,12 @@ const elements = {
 };
 
 let products = [];
+let categories = [];
+let activeCategoryId = "all";
 let siteSettings = structuredClone(defaultSettings);
 let db;
 let auth;
+let seededDefaultCategories = false;
 
 function isFirebaseConfigured() {
   return !firebaseConfig.apiKey.startsWith("ISI_");
@@ -166,6 +184,19 @@ function formatPrice(value) {
 
 function getPriceText(product) {
   return formatPrice(product.price);
+}
+
+function slugify(value) {
+  return String(value)
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 60);
+}
+
+function getCategoryName(categoryId) {
+  return categories.find((category) => category.id === categoryId)?.name || "Tanpa kategori";
 }
 
 function normalizeWhatsappNumbers(value) {
@@ -259,11 +290,73 @@ function fillSettingsForm() {
   elements.youtubeInput.value = siteSettings.socialLinks?.youtube || "";
 }
 
+function renderCategories() {
+  const visibleCategories = categories.length ? categories : fallbackCategories;
+  const tabs = [{ id: "all", name: "Semua" }, ...visibleCategories];
+
+  if (activeCategoryId !== "all" && !visibleCategories.some((category) => category.id === activeCategoryId)) {
+    activeCategoryId = "all";
+  }
+
+  elements.categoryTabs.innerHTML = tabs
+    .map(
+      (category) => `
+        <button class="category-tab ${category.id === activeCategoryId ? "is-active" : ""}" type="button" data-id="${escapeHtml(category.id)}">
+          ${escapeHtml(category.name)}
+        </button>
+      `,
+    )
+    .join("");
+
+  elements.categorySelect.innerHTML = visibleCategories
+    .map((category) => `<option value="${escapeHtml(category.id)}">${escapeHtml(category.name)}</option>`)
+    .join("");
+
+  elements.categoryAdminList.innerHTML = visibleCategories
+    .map((category) => {
+      const count = products.filter((product) => product.categoryId === category.id).length;
+      return `
+        <div class="category-admin-item" data-id="${escapeHtml(category.id)}">
+          <span>${escapeHtml(category.name)} <small>${count} produk</small></span>
+          <button class="danger-button" type="button" data-action="delete-category">Hapus</button>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+async function seedDefaultCategories() {
+  if (!db || seededDefaultCategories || !isAdminUser(auth?.currentUser)) {
+    return;
+  }
+
+  seededDefaultCategories = true;
+  try {
+    await Promise.all(
+    fallbackCategories.map((category) =>
+      setDoc(
+        doc(db, "categories", category.id),
+        {
+          name: category.name,
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+        },
+        { merge: true },
+      ),
+    ),
+    );
+  } catch (error) {
+    seededDefaultCategories = false;
+  }
+}
+
 function renderProducts() {
   const keyword = elements.searchInput.value.trim().toLowerCase();
-  const filteredProducts = products.filter((product) =>
-    [product.name, product.description].join(" ").toLowerCase().includes(keyword),
-  );
+  const filteredProducts = products.filter((product) => {
+    const matchesKeyword = [product.name, product.description].join(" ").toLowerCase().includes(keyword);
+    const matchesCategory = activeCategoryId === "all" || product.categoryId === activeCategoryId;
+    return matchesKeyword && matchesCategory;
+  });
 
   const whatsappNumbers = getWhatsappNumbers();
 
@@ -285,6 +378,7 @@ function renderProducts() {
           <img src="${escapeHtml(product.imageUrl)}" alt="${escapeHtml(product.name)}" loading="lazy">
           <div class="product-info">
             <h3>${escapeHtml(product.name)}</h3>
+            <span class="product-category">${escapeHtml(getCategoryName(product.categoryId))}</span>
             ${priceMarkup}
             <p>${escapeHtml(product.description)}</p>
             <div class="wa-list">${whatsappButtons}</div>
@@ -310,6 +404,7 @@ function renderAdminList() {
           <img src="${escapeHtml(product.imageUrl)}" alt="${escapeHtml(product.name)}">
           <div>
             <strong>${escapeHtml(product.name)}</strong>
+            <span>${escapeHtml(getCategoryName(product.categoryId))}</span>
             <span>${priceText ? escapeHtml(priceText) : "Harga belum diisi"}</span>
           </div>
           <div class="admin-product-actions">
@@ -326,6 +421,9 @@ function renderAdminList() {
 function resetProductForm() {
   elements.productForm.reset();
   elements.productIdInput.value = "";
+  if (categories[0]) {
+    elements.categorySelect.value = categories[0].id;
+  }
   elements.productMessage.textContent = "";
 }
 
@@ -359,7 +457,9 @@ function initFirebase() {
   renderSiteSettings();
 
   if (!isFirebaseConfigured()) {
+    categories = fallbackCategories;
     products = fallbackProducts;
+    renderCategories();
     renderProducts();
     elements.publicStatus.textContent =
       "Mode demo aktif. Isi konfigurasi Firebase di app.js untuk database asli.";
@@ -394,9 +494,27 @@ function initFirebase() {
   );
 
   onSnapshot(
+    query(collection(db, "categories"), orderBy("createdAt", "asc")),
+    (snapshot) => {
+      categories = snapshot.docs.map((item) => ({ id: item.id, ...item.data() }));
+      if (!categories.length) {
+        categories = fallbackCategories;
+        seedDefaultCategories();
+      }
+      renderCategories();
+      renderProducts();
+      renderAdminList();
+    },
+    () => {
+      elements.categoryMessage.textContent = "Gagal memuat kategori.";
+    },
+  );
+
+  onSnapshot(
     query(collection(db, "products"), orderBy("createdAt", "desc")),
     (snapshot) => {
       products = snapshot.docs.map((item) => ({ id: item.id, ...item.data() }));
+      renderCategories();
       renderProducts();
       renderAdminList();
     },
@@ -416,6 +534,9 @@ function initFirebase() {
       return;
     }
     if (allowedAdmin) {
+      if (!categories.length || categories === fallbackCategories) {
+        seedDefaultCategories();
+      }
       renderAdminList();
       fillSettingsForm();
     }
@@ -423,6 +544,17 @@ function initFirebase() {
 }
 
 elements.searchInput.addEventListener("input", renderProducts);
+
+elements.categoryTabs.addEventListener("click", (event) => {
+  const button = event.target.closest("button");
+  if (!button) {
+    return;
+  }
+
+  activeCategoryId = button.dataset.id;
+  renderCategories();
+  renderProducts();
+});
 
 elements.adminOpenBtn.addEventListener("click", () => {
   elements.adminDialog.showModal();
@@ -515,6 +647,53 @@ elements.settingsForm.addEventListener("submit", async (event) => {
   }
 });
 
+elements.categoryForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  elements.categoryMessage.textContent = "Menyimpan kategori...";
+
+  if (!db || !isAdminUser(auth?.currentUser)) {
+    elements.categoryMessage.textContent = "Admin harus login.";
+    return;
+  }
+
+  const name = elements.categoryNameInput.value.trim();
+  const id = slugify(name);
+  if (!id) {
+    elements.categoryMessage.textContent = "Nama kategori tidak valid.";
+    return;
+  }
+
+  try {
+    await setDoc(doc(db, "categories", id), {
+      name,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    });
+    elements.categoryForm.reset();
+    elements.categoryMessage.textContent = "Kategori tersimpan.";
+  } catch (error) {
+    elements.categoryMessage.textContent = error.message || "Kategori gagal disimpan.";
+  }
+});
+
+elements.categoryAdminList.addEventListener("click", async (event) => {
+  const button = event.target.closest("button");
+  const row = event.target.closest(".category-admin-item");
+  if (!button || !row || !db || !isAdminUser(auth?.currentUser)) {
+    return;
+  }
+
+  const usedCount = products.filter((product) => product.categoryId === row.dataset.id).length;
+  if (usedCount) {
+    elements.categoryMessage.textContent = "Kategori masih dipakai produk. Pindahkan/hapus produknya dulu.";
+    return;
+  }
+
+  if (confirm("Hapus kategori ini?")) {
+    await deleteDoc(doc(db, "categories", row.dataset.id));
+  }
+});
+
 elements.productForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   elements.productMessage.textContent = "Menyimpan produk...";
@@ -541,6 +720,7 @@ elements.productForm.addEventListener("submit", async (event) => {
 
     const payload = {
       name: elements.nameInput.value.trim(),
+      categoryId: elements.categorySelect.value,
       price: elements.priceInput.value.trim(),
       description: elements.descriptionInput.value.trim(),
       imageUrl,
@@ -578,6 +758,7 @@ elements.adminList.addEventListener("click", async (event) => {
   if (button.dataset.action === "edit") {
     elements.productIdInput.value = product.id;
     elements.nameInput.value = product.name;
+    elements.categorySelect.value = product.categoryId || categories[0]?.id || "";
     elements.priceInput.value = product.price;
     elements.descriptionInput.value = product.description;
     elements.productMessage.textContent = "Mode edit aktif. Foto boleh dikosongkan jika tidak diganti.";
