@@ -110,16 +110,12 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(14px, 5vw, 76px);
+  gap: clamp(8px, 2vw, 18px);
   width: 100%;
 }
 
 .top-nav a {
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 700;
   text-decoration: none;
-  text-transform: uppercase;
 }
 
 .ghost-button,
@@ -134,9 +130,32 @@ button {
 }
 
 .ghost-button {
-  background: transparent;
-  box-shadow: none;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(236, 229, 219, 0.76));
+  box-shadow:
+    6px 6px 14px rgba(125, 113, 101, 0.16),
+    -6px -6px 14px rgba(255, 255, 255, 0.92),
+    inset 1px 1px 0 rgba(255, 255, 255, 0.86);
   color: var(--muted);
+  text-transform: uppercase;
+}
+
+.top-nav a,
+.top-nav .ghost-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(74px, 12vw, 112px);
+  min-height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  border-radius: 8px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(235, 228, 219, 0.78));
+  box-shadow:
+    6px 6px 14px rgba(125, 113, 101, 0.16),
+    -6px -6px 14px rgba(255, 255, 255, 0.92),
+    inset 1px 1px 0 rgba(255, 255, 255, 0.86);
+  color: #7a7067;
+  font-size: 11px;
+  font-weight: 800;
   text-transform: uppercase;
 }
 
@@ -393,6 +412,18 @@ button {
   text-decoration: none;
 }
 
+.social-links a[aria-label="Instagram"] {
+  color: #d62976;
+}
+
+.social-links a[aria-label="TikTok"] {
+  color: #111111;
+}
+
+.social-links a[aria-label="YouTube"] {
+  color: #ff0033;
+}
+
 .social-links svg {
   width: 25px;
   height: 25px;
@@ -401,6 +432,21 @@ button {
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 1.8;
+}
+
+.social-links a[aria-label="YouTube"] svg path:first-child,
+.social-links a[aria-label="Instagram"] svg rect {
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+.social-links a[aria-label="YouTube"] svg path:last-child,
+.social-links a[aria-label="Instagram"] svg circle {
+  stroke: #fffdf9;
+}
+
+.social-links a[aria-label="TikTok"] svg {
+  filter: drop-shadow(1px 0 0 #00f2ea) drop-shadow(-1px 0 0 #ff0050);
 }
 
 .sr-only {
@@ -587,14 +633,20 @@ button {
     width: 100%;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 8px 12px;
+    gap: 8px;
   }
 
   .top-nav a,
   .ghost-button {
-    min-height: 34px;
-    padding: 0 8px;
+    padding: 0;
     font-size: 10px;
+  }
+
+  .top-nav a,
+  .top-nav .ghost-button {
+    width: calc(50% - 6px);
+    max-width: 154px;
+    min-height: 38px;
   }
 
   .hero {
@@ -688,7 +740,7 @@ button {
   }
 
   .top-nav {
-    gap: 14px;
+    gap: 7px;
   }
 
   .hero {
