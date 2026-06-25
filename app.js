@@ -233,17 +233,17 @@ function renderSiteSettings() {
   setHeroBackground(
     ".hero-left",
     siteSettings.heroImages?.left || defaultSettings.heroImages.left,
-    "linear-gradient(rgba(255, 253, 249, 0.18), rgba(255, 253, 249, 0.18)), ",
+    "linear-gradient(rgba(241, 238, 252, 0.2), rgba(241, 238, 252, 0.2)), ",
   );
   setHeroBackground(
     ".hero-main",
     siteSettings.heroImages?.main || defaultSettings.heroImages.main,
-    "linear-gradient(to top, rgba(255, 253, 249, 0.78), rgba(255, 253, 249, 0.08) 46%), ",
+    "linear-gradient(to top, rgba(241, 238, 252, 0.82), rgba(241, 238, 252, 0.1) 46%), ",
   );
   setHeroBackground(
     ".hero-right",
     siteSettings.heroImages?.right || defaultSettings.heroImages.right,
-    "linear-gradient(rgba(62, 57, 52, 0.1), rgba(62, 57, 52, 0.1)), ",
+    "linear-gradient(rgba(64, 58, 77, 0.1), rgba(64, 58, 77, 0.1)), ",
   );
 
   renderSocialLinks();

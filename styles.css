@@ -1,14 +1,27 @@
 :root {
   --paper: #f8f6ff;
   --paper-deep: #e9e5fb;
-  --ink: #3e3934;
+  --surface: #f1eefc;
+  --surface-soft: #f8f6ff;
+  --ink: #403a4d;
   --muted: #8d86a0;
   --rose: #d9a9a6;
   --sage: #9baa8d;
   --cream: #fffdf9;
-  --line: rgba(62, 57, 52, 0.12);
-  --shadow-dark: rgba(144, 135, 176, 0.28);
+  --line: rgba(125, 116, 155, 0.16);
+  --shadow-dark: rgba(133, 124, 166, 0.28);
   --shadow-light: rgba(255, 255, 255, 0.96);
+  --raised:
+    12px 12px 28px rgba(133, 124, 166, 0.24),
+    -12px -12px 28px rgba(255, 255, 255, 0.92),
+    inset 1px 1px 0 rgba(255, 255, 255, 0.96);
+  --raised-small:
+    7px 7px 16px rgba(133, 124, 166, 0.22),
+    -7px -7px 16px rgba(255, 255, 255, 0.94),
+    inset 1px 1px 0 rgba(255, 255, 255, 0.96);
+  --pressed:
+    inset 7px 7px 14px rgba(133, 124, 166, 0.18),
+    inset -7px -7px 14px rgba(255, 255, 255, 0.92);
 }
 
 * {
@@ -20,7 +33,7 @@ body {
   min-height: 100vh;
   background:
     radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.74), transparent 28rem),
-    linear-gradient(135deg, var(--paper), #ffffff 44%, var(--paper-deep));
+    linear-gradient(135deg, var(--paper), var(--surface-soft) 44%, var(--paper-deep));
   color: var(--ink);
   font-family: Inter, system-ui, sans-serif;
 }
@@ -45,8 +58,11 @@ button {
   justify-content: center;
   gap: clamp(12px, 2vw, 20px);
   padding: clamp(24px, 5vw, 42px) clamp(16px, 5vw, 64px) clamp(14px, 2.4vw, 20px);
-  background: #f8f6ff;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.78);
+  background: var(--surface);
+  border-bottom: 0;
+  box-shadow:
+    inset 0 -8px 18px rgba(133, 124, 166, 0.1),
+    inset 0 8px 18px rgba(255, 255, 255, 0.6);
 }
 
 .brand {
@@ -65,10 +81,7 @@ button {
 .product-form,
 .login-form {
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(232, 228, 250, 0.78));
-  box-shadow:
-    12px 12px 28px rgba(144, 135, 176, 0.22),
-    -12px -12px 28px rgba(255, 255, 255, 0.92),
-    inset 1px 1px 0 rgba(255, 255, 255, 0.95);
+  box-shadow: var(--raised);
 }
 
 .brand h1,
@@ -89,7 +102,7 @@ button {
 }
 
 .brand h1 {
-  color: #777087;
+  color: #746c8d;
   font-family: "Great Vibes", cursive;
   font-size: clamp(48px, 7vw, 86px);
   font-weight: 400;
@@ -133,10 +146,7 @@ button {
 
 .ghost-button {
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(231, 226, 249, 0.82));
-  box-shadow:
-    8px 8px 18px rgba(144, 135, 176, 0.2),
-    -8px -8px 18px rgba(255, 255, 255, 0.95),
-    inset 1px 1px 0 rgba(255, 255, 255, 0.96);
+  box-shadow: var(--raised-small);
   color: var(--muted);
   text-transform: uppercase;
 }
@@ -151,10 +161,7 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.84);
   border-radius: 8px;
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(231, 226, 249, 0.84));
-  box-shadow:
-    8px 8px 18px rgba(144, 135, 176, 0.2),
-    -8px -8px 18px rgba(255, 255, 255, 0.96),
-    inset 1px 1px 0 rgba(255, 255, 255, 0.96);
+  box-shadow: var(--raised-small);
   color: #827a94;
   font-size: 11px;
   font-weight: 800;
@@ -164,25 +171,62 @@ button {
 .top-nav a:active,
 .top-nav .ghost-button:active,
 .social-links a:active {
-  box-shadow:
-    inset 6px 6px 14px rgba(144, 135, 176, 0.2),
-    inset -6px -6px 14px rgba(255, 255, 255, 0.92);
+  box-shadow: var(--pressed);
 }
 
 .primary-button {
   background: linear-gradient(145deg, #aebc9e, #879978);
   color: white;
   box-shadow:
-    7px 7px 15px rgba(115, 128, 98, 0.24),
-    -5px -5px 13px rgba(255, 255, 255, 0.8);
+    8px 8px 18px rgba(111, 132, 102, 0.28),
+    -7px -7px 16px rgba(255, 255, 255, 0.9),
+    inset 1px 1px 0 rgba(255, 255, 255, 0.36);
+}
+
+.primary-button:active,
+.wa-button:active,
+.danger-button:active {
+  box-shadow:
+    inset 5px 5px 12px rgba(64, 58, 77, 0.2),
+    inset -5px -5px 12px rgba(255, 255, 255, 0.42);
+  transform: translateY(1px);
 }
 
 .icon-button {
   width: 42px;
   padding: 0;
-  background: transparent;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.78), rgba(231, 226, 249, 0.9));
+  box-shadow: var(--raised-small);
   color: var(--muted);
   font-size: 28px;
+}
+
+.top-nav a:hover,
+.top-nav .ghost-button:hover,
+.social-links a:hover,
+.product-card:hover {
+  transform: translateY(-1px);
+}
+
+.top-nav a,
+.top-nav .ghost-button,
+.social-links a,
+.product-card,
+.primary-button,
+.wa-button,
+.danger-button {
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    filter 160ms ease;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid rgba(124, 100, 134, 0.42);
+  outline-offset: 3px;
 }
 
 .hero {
@@ -190,7 +234,7 @@ button {
   grid-template-columns: minmax(120px, 0.95fr) minmax(260px, 1.9fr) minmax(120px, 0.95fr);
   min-height: clamp(300px, 46vh, 540px);
   overflow: hidden;
-  border-bottom: 18px solid #f8f6ff;
+  border-bottom: 18px solid var(--surface);
 }
 
 .hero-main,
@@ -205,17 +249,17 @@ button {
   place-items: end center;
   padding: 0 40px 34px;
   background-image:
-    linear-gradient(to top, rgba(255, 253, 249, 0.78), rgba(255, 253, 249, 0.08) 46%),
+    linear-gradient(to top, rgba(241, 238, 252, 0.82), rgba(241, 238, 252, 0.1) 46%),
     url("https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=1400&q=80");
 }
 
 .hero-left {
-  background-image: linear-gradient(rgba(255, 253, 249, 0.18), rgba(255, 253, 249, 0.18)),
+  background-image: linear-gradient(rgba(241, 238, 252, 0.2), rgba(241, 238, 252, 0.2)),
     url("https://images.unsplash.com/photo-1518709779341-56cf4535e94b?auto=format&fit=crop&w=800&q=80");
 }
 
 .hero-right {
-  background-image: linear-gradient(rgba(62, 57, 52, 0.1), rgba(62, 57, 52, 0.1)),
+  background-image: linear-gradient(rgba(64, 58, 77, 0.1), rgba(64, 58, 77, 0.1)),
     url("https://images.unsplash.com/photo-1470509037663-253afd7f0f51?auto=format&fit=crop&w=800&q=80");
 }
 
@@ -223,11 +267,8 @@ button {
   width: min(620px, 100%);
   border-radius: 8px;
   padding: 14px 18px;
-  background: rgba(248, 246, 255, 0.82);
-  box-shadow:
-    10px 10px 22px rgba(144, 135, 176, 0.22),
-    -8px -8px 20px rgba(255, 255, 255, 0.82),
-    inset 1px 1px 0 rgba(255, 255, 255, 0.94);
+  background: rgba(241, 238, 252, 0.86);
+  box-shadow: var(--raised-small);
   text-align: center;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
@@ -251,6 +292,10 @@ button {
   width: min(1180px, calc(100% - clamp(28px, 5vw, 64px)));
   margin: 0 auto;
   padding: clamp(38px, 7vw, 82px) 0;
+}
+
+main {
+  background: var(--surface);
 }
 
 .section-heading {
@@ -280,16 +325,21 @@ button {
   color: var(--muted);
   font-size: 13px;
   font-weight: 700;
+  background: var(--surface);
+  box-shadow: var(--pressed);
 }
 
 .search-box input,
 .login-form input,
+.settings-form input,
+.settings-form textarea,
 .product-form input,
 .product-form textarea {
   width: 100%;
-  border: 1px solid var(--line);
+  border: 0;
   border-radius: 8px;
-  background: rgba(255, 253, 249, 0.82);
+  background: var(--surface);
+  box-shadow: var(--pressed);
   color: var(--ink);
   outline: none;
 }
@@ -297,6 +347,18 @@ button {
 .search-box input {
   border: 0;
   background: transparent;
+  box-shadow: none;
+}
+
+input::file-selector-button {
+  border: 0;
+  border-radius: 8px;
+  margin-right: 10px;
+  padding: 9px 12px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.8), rgba(231, 226, 249, 0.9));
+  box-shadow: var(--raised-small);
+  color: #827a94;
+  font-weight: 800;
 }
 
 .status-line {
@@ -317,7 +379,7 @@ button {
   min-height: 100%;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.68);
   border-radius: 8px;
 }
 
@@ -325,6 +387,9 @@ button {
   width: 100%;
   aspect-ratio: 4 / 5;
   object-fit: cover;
+  box-shadow:
+    inset 0 -14px 24px rgba(133, 124, 166, 0.16),
+    0 1px 0 rgba(255, 255, 255, 0.82);
 }
 
 .product-info {
@@ -350,7 +415,7 @@ button {
 }
 
 .price {
-  color: #876966;
+  color: #7c6486;
   font-size: 18px;
   font-weight: 800;
 }
@@ -362,10 +427,14 @@ button {
   min-height: 44px;
   margin-top: auto;
   border-radius: 8px;
-  background: #6f9275;
+  background: linear-gradient(145deg, #8faf8d, #6c8f70);
   color: white;
   font-weight: 800;
   text-decoration: none;
+  box-shadow:
+    7px 7px 16px rgba(94, 118, 93, 0.24),
+    -6px -6px 15px rgba(255, 255, 255, 0.78),
+    inset 1px 1px 0 rgba(255, 255, 255, 0.35);
 }
 
 .wa-list {
@@ -376,7 +445,7 @@ button {
 
 .order-band {
   padding: 70px 18px 86px;
-  background: rgba(255, 253, 249, 0.64);
+  background: var(--surface);
   text-align: center;
 }
 
@@ -387,7 +456,7 @@ button {
 
 .social-band {
   padding: 62px 18px 78px;
-  background: rgba(233, 229, 251, 0.58);
+  background: var(--surface);
   text-align: center;
 }
 
@@ -414,10 +483,7 @@ button {
   border-radius: 8px;
   padding: 0;
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(231, 226, 249, 0.84));
-  box-shadow:
-    9px 9px 20px rgba(144, 135, 176, 0.22),
-    -9px -9px 20px rgba(255, 255, 255, 0.94),
-    inset 1px 1px 0 rgba(255, 255, 255, 0.95);
+  box-shadow: var(--raised-small);
   color: var(--ink);
   font-weight: 800;
   text-decoration: none;
@@ -556,10 +622,11 @@ button {
 }
 
 .admin-product {
-  border: 1px solid var(--line);
+  border: 1px solid rgba(255, 255, 255, 0.66);
   border-radius: 8px;
   padding: 12px;
-  background: rgba(255, 253, 249, 0.74);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.74), rgba(232, 228, 250, 0.82));
+  box-shadow: var(--raised-small);
 }
 
 .admin-product img {
@@ -588,9 +655,13 @@ button {
   border-radius: 8px;
   min-height: 38px;
   padding: 0 12px;
-  background: #c9827e;
+  background: linear-gradient(145deg, #d89996, #bd7470);
   color: white;
   font-weight: 800;
+  box-shadow:
+    7px 7px 16px rgba(156, 94, 92, 0.22),
+    -6px -6px 15px rgba(255, 255, 255, 0.78),
+    inset 1px 1px 0 rgba(255, 255, 255, 0.32);
 }
 
 @media (min-width: 1280px) {
